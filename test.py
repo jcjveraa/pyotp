@@ -249,6 +249,16 @@ class TOTPExampleValuesFromTheRFC(unittest.TestCase):
         self.assertEqual(len(pyotp.random_base32()), 16)
         self.assertEqual(len(pyotp.random_base32(length=20)), 20)
 
+    def test_comparisons_fallback(self):
+        sys.modules['hmac'] = None
+        self.assertTrue(pyotp.utils.strings_equal("", ""))
+        self.assertTrue(pyotp.utils.strings_equal("a", "a"))
+        self.assertTrue(pyotp.utils.strings_equal("a" * 1000, "a" * 1000))
+
+        self.assertFalse(pyotp.utils.strings_equal("", "a"))
+        self.assertFalse(pyotp.utils.strings_equal("a", ""))
+        self.assertFalse(pyotp.utils.strings_equal("a" * 999 + "b", "a" * 1000))
+
 
 class CompareDigestTest(unittest.TestCase):
     method = staticmethod(pyotp.utils.compare_digest)
@@ -261,17 +271,6 @@ class CompareDigestTest(unittest.TestCase):
         self.assertFalse(self.method("", "a"))
         self.assertFalse(self.method("a", ""))
         self.assertFalse(self.method("a" * 999 + "b", "a" * 1000))
-
-    def test_comparisons_fallback(self):
-        sys.modules['hmac'] = None
-        self.assertTrue(self.method("", ""))
-        self.assertTrue(self.method("a", "a"))
-        self.assertTrue(self.method("a" * 1000, "a" * 1000))
-
-        self.assertFalse(self.method("", "a"))
-        self.assertFalse(self.method("a", ""))
-        self.assertFalse(self.method("a" * 999 + "b", "a" * 1000))
-
 
 class FallBackCompareDigestTest(CompareDigestTest):
     method = staticmethod(pyotp.utils._compare_digest)
