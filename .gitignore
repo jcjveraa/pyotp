@@ -16,6 +16,7 @@ __pycache__/
 
 # IDE project files
 /.pydevproject
+/.vscode
 
 # vim python-mode plugin
 /.ropeproject
