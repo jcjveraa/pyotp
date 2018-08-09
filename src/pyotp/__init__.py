@@ -6,18 +6,28 @@ from pyotp.otp import OTP  # noqa
 from pyotp.totp import TOTP  # noqa
 from . import utils  # noqa
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> patch-3
 def random_base32(length=16, random=None,
                   chars=list('ABCDEFGHIJKLMNOPQRSTUVWXYZ234567')):
 
     # Use secrets module if available (Python version >= 3.6) per PEP 506
     try:
         import secrets
+<<<<<<< HEAD
     except ImportError:
         import random as _random
         random = _random.SystemRandom()
     else:
         random = secrets.SystemRandom()
+=======
+        random = secrets.SystemRandom()
+    except ImportError:
+        import random as _random
+        random = _random.SystemRandom()
+>>>>>>> patch-3
 
     return ''.join(
         random.choice(chars)
