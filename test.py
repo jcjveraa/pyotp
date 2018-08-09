@@ -262,6 +262,16 @@ class CompareDigestTest(unittest.TestCase):
         self.assertFalse(self.method("a", ""))
         self.assertFalse(self.method("a" * 999 + "b", "a" * 1000))
 
+    def test_comparisons_fallback(self):
+        sys.modules['hmac'] = None
+        self.assertTrue(self.method("", ""))
+        self.assertTrue(self.method("a", "a"))
+        self.assertTrue(self.method("a" * 1000, "a" * 1000))
+
+        self.assertFalse(self.method("", "a"))
+        self.assertFalse(self.method("a", ""))
+        self.assertFalse(self.method("a" * 999 + "b", "a" * 1000))
+
 
 class FallBackCompareDigestTest(CompareDigestTest):
     method = staticmethod(pyotp.utils._compare_digest)
