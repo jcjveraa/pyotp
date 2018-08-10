@@ -75,7 +75,7 @@ def build_uri(secret, name, initial_count=None, issuer_name=None,
     uri = base_uri.format(otp_type, label, urlencode(url_args).replace("+", "%20"))
     return uri
 
-from hmac import compare_digest
+
 def strings_equal(s1, s2):
     """
     Timing-attack resistant string comparison.
@@ -85,6 +85,8 @@ def strings_equal(s1, s2):
     still reveal to a timing attack whether the strings are the same
     length.
     """
+    from hmac import compare_digest
+    
     s1 = unicodedata.normalize('NFKC', s1)
     s2 = unicodedata.normalize('NFKC', s2)
     return compare_digest(s1, s2)
