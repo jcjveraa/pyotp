@@ -274,6 +274,8 @@ class CompareDigestTest(unittest.TestCase):
         
     def fallback_working(self):
         os.system("/scr/pyotp/util.py")
+        sys.modules['hmac'] = None
+        os.system("/scr/pyotp/util.py")
 
 class FallBackCompareDigestTest(CompareDigestTest):
     method = staticmethod(pyotp.utils._compare_digest)
