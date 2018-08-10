@@ -272,7 +272,7 @@ class CompareDigestTest(unittest.TestCase):
         self.assertFalse(self.method("a", ""))
         self.assertFalse(self.method("a" * 999 + "b", "a" * 1000))
         
-    def fallback_working(self):
+    def test_fallback_working(self):
         os.system("/scr/pyotp/util.py")
         sys.modules['hmac'] = None
         os.system("/scr/pyotp/util.py")
